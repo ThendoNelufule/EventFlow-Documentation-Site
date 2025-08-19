@@ -1,37 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Backend Documentation - Sprint 1</title>
-    <link rel="stylesheet" href="frontend.css"> <!-- same CSS as frontend -->
-</head>
-<body>
-
+    <link rel="stylesheet" href="frontend.css" />
+    <!-- same CSS as frontend -->
+    <style>
+      :root {
+        --maxw: 900px;
+      }
+      header {
+        background-color: #153291;
+        margin: 0 auto;
+        padding: 25px 15px;
+      }
+      main {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .section {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin: 1rem 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      }
+      .section h2 {
+        color: #153291;
+        margin-top: 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .badge {
+        display: inline-block;
+        background: #eef2ff;
+        color: #3730a3;
+        border: 1px solid #c7d2fe;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.825rem;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        overflow: auto;
+        font-size: 0.9rem;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+      ul {
+        margin: 0.5rem 0 0.5rem 1.25rem;
+      }
+    </style>
+  </head>
+  <body>
     <!-- Header -->
     <header>Backend Documentation - Sprint 1</header>
 
     <!-- Content section -->
     <main>
-        <div class="section">
-            <h2>Overview</h2>
-            <p>/* Teammates can write backend overview here */</p>
-        </div>
+      <div class="section">
+        <h2>Overview</h2>
+        <p>
+          The backend is a Node.js/Express application backed by MongoDB via
+          Mongoose. It uses Passport with Google OAuth 2.0 for authentication,
+          Express sessions for state, and JWT for protecting routes such as role
+          selection and submission.
+        </p>
+        <p>
+          <span class="badge">Node.js</span>
+          <span class="badge">Express</span>
+          <span class="badge">MongoDB</span>
+          <span class="badge">Mongoose</span>
+          <span class="badge">Passport (Google)</span>
+          <span class="badge">JWT</span>
+        </p>
+      </div>
 
-        <div class="section">
-            <h2>Database Design</h2>
-            <p>/* Teammates can describe database structure, schemas, tables here */</p>
-        </div>
+      <div class="section">
+        <h2>Models</h2>
+        <h3>User Schema</h3>
+        <p>Fields:</p>
+        <ul>
+          <li>Google id</li>
+          <li>email</li>
+          <li>username (stored as <code>displayName</code>)</li>
+          <li>role: [Event Manager, Guest, Staff, Security]</li>
+          <li>createdAt</li>
+        </ul>
+        <p>Example shape:</p>
+        <pre><code>{
+  googleId: String,
+  email: String,
+  displayName: String,
+  role: { type: String, enum: ["Event Manager", "Guest", "Staff", "Security"] },
+  createdAt: { type: Date, default: Date.now }
+}</code></pre>
+      </div>
 
-        <div class="section">
-            <h2>API Endpoints</h2>
-            <p>/* Teammates can list and describe APIs, routes, request/response details */</p>
-        </div>
+      <div class="section">
+        <h2>Database Design</h2>
+        <p>
+          MongoDB stores users in the <code>users</code> collection. Connection
+          is managed with Mongoose in <code>backend/config/db.js</code> using
+          <code>MONGO_URI</code>.
+        </p>
+      </div>
 
-        <div class="section">
-            <h2>Implementation Details</h2>
-            <p>/* Teammates can write backend logic, functions, and other important info */</p>
+      <div class="section">
+        <h2>API Endpoints</h2>
+        <div class="grid">
+          <div>
+            <h3>Auth</h3>
+            <ul>
+              <li><code>GET /auth/google</code> – Start Google OAuth</li>
+              <li>
+                <code>GET /auth/google/callback</code> – Handle callback, create
+                JWT with user <code>_id</code>, store it in session, redirect to
+                <code>/roles</code>
+              </li>
+              <li><code>GET /auth/logout</code> – End session and sign out</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Protected</h3>
+            <ul>
+              <li>
+                <code>GET /roles</code> – Role selection page (JWT required)
+              </li>
+              <li>
+                <code>POST /submit-role</code> – Persist selected role (JWT
+                required)
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>Index</h3>
+            <ul>
+              <li><code>GET /</code> – Redirect to <code>/welcome</code> (middleware: <code>redirectIfAuthenticated</code>)</li>
+              <li><code>GET /welcome</code> – Render landing page (middleware: <code>redirectIfAuthenticated</code>)</li>
+              <li><code>GET /signup</code> – Render signup form (middleware: <code>redirectIfAuthenticated</code>)</li>
+              <li><code>GET /roles</code> – Role selection page (middleware: <code>onboardingJWT</code>)</li>
+              <li><code>POST /submit-role</code> – Assign role, update user, re-issue JWT, redirect to <code>/dashboard</code> (middleware: <code>authenticateJWT</code>)</li>
+              <li><code>GET /login</code> – Render login form</li>
+              <li><code>GET /logout</code> – End session, clear cookie, respond with JSON success</li>
+              <li><code>GET /dashboard</code> – Render dashboard (middleware: <code>authenticateJWT</code>)</li>
+            </ul>
+          </div>
         </div>
+        <p>
+          Protection is enforced with <code>authenticateJWT</code> in
+          <code>backend/middleware/authenticateJWT.js</code>.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Implementation Details</h2>
+        <ul>
+          <li>
+            <strong>db.js</strong> – Connection between the app and MongoDB
+            using Mongoose.
+          </li>
+          <li>
+            <strong>passport.js</strong> – Configures Passport strategies
+            (Google). Handles serializing/deserializing users for sessions.
+          </li>
+          <li>
+            <strong>session.js</strong> – Express session settings, including
+            secret and secure cookies in production.
+          </li>
+          <li>
+            <strong>middleware/authenticateJWT.js</strong> – JWT middleware.
+            <code>authenticateJWT</code> verifies login;
+            <code>redirectIfAuthenticated</code> sends logged-in users away from
+            signup/login pages;<br/>
+            <code>onboardingJWT</code> checks if user has already selected a role.
+          </li>
+          <li>
+            <strong>models/User.js</strong> – Mongoose schema storing
+            <code>googleId</code>, <code>displayName</code> (username),
+            <code>email</code>, <code>role</code>, and <code>createdAt</code>.
+          </li>
+          <li>
+            <strong>routes/auth.js</strong> – Login routes. Starts Google OAuth,
+            then creates a JWT with the user’s Mongo <code>_id</code>, saves it
+            in the session, and redirects to <code>/roles</code>.
+          </li>
+          <li>
+            <strong>routes/index.js</strong> – Main app routes like
+            <code>/roles</code> and <code>/submit-role</code>, protected by the
+            JWT middleware.
+          </li>
+          <li>
+            <strong>app.js</strong> – Main Express app file. Loads environment
+            variables, sets up sessions, Passport, body parser, and routes;
+            starts the server.
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Environment (.env)</h2>
+        <p>Place the following in your <code>.env</code> file:</p>
+        <pre><code>MONGO_URI=mongodb+srv://mumandafhadzi:muma1234@cluster1.geuzkgx.mongod
+b.net/eventManagement?retryWrites=true&w=majority&appName=Cluster1
+GOOGLE_CLIENT_ID=1094796734180-
+jimd9hifu08952p054lc9nm76kja8odm.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+JWT_SECRET=4c1f72e88b9a5d1c39aa72c8f7cbe0a3e7af2dcf52dbbb0fa1d3a0f08f391
+c5e44d2f12d51a7d5b7648df8f0275b37e7cbf152e27c508b3012f95aaf7b9cc774
+SESSION_SECRET=supersecret_session_key_9843!</code></pre>
+        <p>
+          <em
+            >For production, store secrets securely and keep them out of version
+            control.</em
+          >
+        </p>
+      </div>
     </main>
-
-</body>
+  </body>
 </html>
