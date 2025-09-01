@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EventFLow — System Overview</title>
+  <link rel="stylesheet" href="../css/overview.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>EventFLow</h1>
+      <p class="subtitle">Real-time event management: guest check-ins, schedule monitoring, live updates.</p>
+      <div class="badges">
+        <span class="badge">Real-time</span>
+        <span class="badge">On-site coordination</span>
+        <span class="badge">Offline support</span>
+        <span class="badge">QR check-ins</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Table of Contents -->
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Overview Map</h2>
+      <ul>
+        <li><a href="#purpose">1. Purpose</a></li>
+        <li><a href="#features">2. Core Features</a></li>
+        <li><a href="#ui-modules">3. UI Modules</a></li>
+        <li><a href="#api-modules">4. API Modules</a></li>
+        <li><a href="#data-model">5. Database Components</a></li>
+        <li><a href="#flow">6. System Flow (day-of)</a></li>
+      </ul>
+    </nav>
+
+    <!-- Purpose -->
+    <section id="purpose" class="card">
+      <h2>1. Purpose</h2>
+      <p>
+        Build a website that supports <strong>real-time event management on the day of the event</strong> —
+        including guest check-ins, schedule monitoring, and live updates. The system is modular:
+        UI modules for operators on-site, APIs for integration, and a data layer to persist operational state.
+      </p>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="card">
+      <h2>2. Core Features</h2>
+
+      <div class="feature-grid">
+        <article class="feature">
+          <h3>Guest Check-In</h3>
+          <ul>
+            <li>Check guests in via manual search or built-in QR generation.</li>
+            <li>Upload guest lists manually if integration is unavailable.</li>
+          </ul>
+        </article>
+
+        <article class="feature">
+          <h3>Schedule &amp; Announcements</h3>
+          <ul>
+            <li>Push the program of the event to staff and guests</li>
+            <li>View and edit a real-time schedule for events or sessions.</li>
+            <li>Push announcements to displays or message boards.</li>
+          </ul>
+        </article>
+
+        <article class="feature">
+          <h3>Event Venues</h3>
+          <ul>
+            <li>Display venues or upload venues of interest.</li>
+            <li>Venues come with their own floor maps</li>
+            <li>Use drawing tools to annotate in real-time.</li>
+          </ul>
+        </article>
+
+        <article class="feature">
+          <h3>On-Site Coordination</h3>
+          <ul>
+            <li>Assign tasks to staff, log incidents, and mark task completion.</li>
+            <li>Offline support for mobile teams.</li>
+          </ul>
+        </article>
+
+        <article class="feature">
+            <h3>communication</h3>
+            <ul>
+                <li>Manager and their staff can chat real-time</li>
+            </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- UI Modules -->
+    <section id="ui-modules" class="card">
+      <h2>3. UI Modules</h2>
+
+      <div class="module-grid">
+        <article class="module">
+          <h3>Check-In Console</h3>
+          <p>Scan or search guests; manually mark arrivals.</p>
+          <ul class="bullets">
+            <li>QR scan or name/email search</li>
+            <li>Manual override for edge cases</li>
+            <li>Immediate status feedback</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <h3>Live Schedule View</h3>
+          <p>Editable agenda; broadcast announcements.</p>
+          <ul class="bullets">
+            <li>Drag-to-reorder sessions</li>
+            <li>Live status (On time / Delayed / Cancelled)</li>
+            <li>Push announcements to boards</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <h3>Venue Map</h3>
+          <p>Upload static floorplans; add labels or emergency notes.</p>
+          <ul class="bullets">
+            <li>POI tags (stages, exits, booths)</li>
+            <li>Real-time drawings/annotations</li>
+            <li>Versioned map uploads</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <h3>Staff Dashboard</h3>
+          <p>Assign roles, log incidents, and chat in real-time.</p>
+          <ul class="bullets">
+            <li>Task assignment &amp; completion</li>
+            <li>Incident logging</li>
+            <li>Team chat (per event)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- API Modules -->
+    <section id="api-modules" class="card">
+      <h2>4. API Modules</h2>
+
+      <div class="api-grid">
+        <article class="api">
+          <h3>Check-In API</h3>
+          <p>Update and view guest entry data.</p>
+          <code class="endpoint">PATCH /api/checkin/{guestId}</code>
+          <code class="endpoint">GET&nbsp;&nbsp;&nbsp;/api/checkin?eventId={id}</code>
+        </article>
+
+        <article class="api">
+          <h3>Schedule API</h3>
+          <p>Modify and retrieve live session data.</p>
+          <code class="endpoint">GET&nbsp;&nbsp;&nbsp;/api/schedule?eventId={id}</code>
+          <code class="endpoint">PUT&nbsp;&nbsp;&nbsp;/api/schedule/{sessionId}</code>
+        </article>
+
+        <article class="api">
+          <h3>Map API</h3>
+          <p>Serve event layout and allow annotations.</p>
+          <code class="endpoint">POST /api/maps/upload</code>
+          <code class="endpoint">POST /api/maps/{mapId}/annotations</code>
+        </article>
+
+        <article class="api">
+          <h3>Staff API</h3>
+          <p>Handle task assignments, completion, and internal logs.</p>
+          <code class="endpoint">POST /api/staff/tasks</code>
+          <code class="endpoint">PATCH /api/staff/tasks/{taskId}</code>
+        </article>
+        <article class="api">
+            <h3>Communication API</h3>
+            <p>Send messages and notification between manager, staff and guests</p>
+            <code class="endpoint"> POST /api/manager/chat</code>
+            <code class="endpoint"> POST /api/staff/team-chat</code>
+        </article>
+      </div>
+
+    </section>
+
+    <!-- Database Components -->
+    <section id="data-model" class="card">
+      <h2>5. Database Components</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Collection / Table</th>
+              <th>Key Fields</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Guest Records</td>
+              <td>Name, Email, check-in status, optional QR code</td>
+              <td>Tracks invited guests and their entry status.</td>
+            </tr>
+            <tr>
+              <td>Schedule Items</td>
+              <td>Time, location, description, status</td>
+              <td>Session/agenda data with live status.</td>
+            </tr>
+            <tr>
+              <td>Venue Maps</td>
+              <td>Uploaded images, interactive overlays</td>
+              <td>Floorplans and user-added annotations.</td>
+            </tr>
+            <tr>
+              <td>Staff Logs</td>
+              <td>Assigned tasks, completion status, messages</td>
+              <td>Operational coordination and audit trail.</td>
+            </tr>
+            <tr>
+                <td>Chat</td>
+                <td>Manager, members, messages</td>
+                <td>Communication between manager and staff</td>
+            </tr>
+            <tr>
+                <td>Venues</td>
+                <td>Name, address, city</td>
+                <td>venues choices to set up an event</td>
+            </tr>
+            <tr>
+                <td>Event</td>
+                <td>EventName, EventDate, EventTime</td>
+                <td></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Day-of Flow -->
+    <section id="flow" class="card">
+      <h2>6. System Flow (Day-of Event)</h2>
+      <ol class="flow">
+        <li><strong>Pre-event:</strong> Import guest list, set schedule, upload maps, create staff tasks.</li>
+        <li><strong>Doors open:</strong> Guests checked in via QR/manual; status updates in real time.</li>
+        <li><strong>Live operations:</strong> Schedule changes propagate; announcements broadcast to boards.</li>
+        <li><strong>On-site coordination:</strong> Tasks assigned/completed; incidents logged; team chat active.</li>
+        <li><strong>Wrap-up:</strong> Export check-in stats, final schedule, incident summary.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EventFLow - System Overview</p>
+    </div>
+  </footer>
+</body>
+</html>
