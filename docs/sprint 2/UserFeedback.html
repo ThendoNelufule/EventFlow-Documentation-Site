@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Feedback - Sprint 2</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #153291;
+            color: white;
+            padding: 30px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #ff8800fb;
+            margin-bottom: 15px;
+        }
+
+        .section p, .section ul {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #153291;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .evidence {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .evidence img, .evidence video {
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        video {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>User Feedback - Sprint 2</header>
+
+<main>
+    <div class="section">
+        <h2>Feedback Participant: Musala Ndouvhada</h2>
+        <p><strong>Contact:</strong> 083 667 9065</p>
+        <p><strong>Scenario:</strong> During testing of the email invitation system for staff login, the email did not correctly display the recipient's name. For example, instead of “Hi Musala,” it displayed “Hi undefined.”</p>
+        <p><strong>Evidence:</strong></p>
+        <div class="evidence">
+            <img src="../images/5.jpg" alt="Musala Feedback Screenshot">
+        </div>
+         <p class="resolved-note">Issue later resolved; emails now display the correct recipient name.</p>
+    </div>
+
+    <div class="section">
+        <h2>Feedback Participant: Mulega Muano</h2>
+        <p><strong>Contact:</strong> 079 645 2796</p>
+        <p><strong>Scenario:</strong> While testing the venue selection page, clicking the “Add New Venue” button caused an “Upload Failed” error, preventing new venue entries from being added.</p>
+        <p><strong>Evidence:</strong></p>
+        <div class="evidence">
+            <video controls>
+                <source src="../images/6.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p class="resolved-note">Issue later resolved; venue uploads are now processed correctly.</p>
+    </div>
+
+    <div class="section">
+        <h2>Feedback Participant: Mukwevho Mukundi</h2>
+        <p><strong>Contact:</strong> 065 996 1575</p>
+        <p><strong>Scenario:</strong> When sending a guest invitation, the system returned a “Failed to Send Invite” message, preventing the invitation from reaching the recipient.</p>
+        <p><strong>Evidence:</strong></p>
+        <div class="evidence">
+            <video controls>
+                <source src="../images/7.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p class="resolved-note">Issue later resolved; guest invitations now send successfully.</p>
+    </div>
+</main>
+
+</body>
+</html>

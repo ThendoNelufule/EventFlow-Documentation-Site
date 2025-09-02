@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventFLow Documentation</title>
+  <link rel="stylesheet" href="../css/database.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Database Docs</h2>
+    <nav>
+      <ul>
+        <li><a href="#data-models" class="active">Data Models</a></li>
+        <li><a href="#deployment">Deployment & Justification</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <!-- Data Models Section -->
+    <section id="data-models" class="card">
+      <h1>Data Models</h1>
+      <p>This section documents all database schemas used in EventFLow.</p>
+
+      <!-- User Schema -->
+      <section id="user">
+        <h2>User</h2>
+        <p>Represents all users in the system: managers, guests, staff, and security personnel.</p>
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>googleId</td><td>String</td><td>Unique Google authentication ID</td></tr>
+            <tr><td>email</td><td>String</td><td>User email address</td></tr>
+            <tr><td>displayName</td><td>String</td><td>Name displayed in app</td></tr>
+            <tr><td>role</td><td>Enum ['manager','guest','staff','security']</td><td>User role for permissions</td></tr>
+            <tr><td>createdAt</td><td>Date</td><td>Record creation timestamp</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Event Schema -->
+      <section id="event">
+        <h2>Event</h2>
+        <p>Represents an event including schedule, guests, staff, venue, and map data.</p>
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>name</td><td>String</td><td>Event name</td></tr>
+            <tr><td>description</td><td>String</td><td>Event summary</td></tr>
+            <tr><td>dateTime</td><td>Date</td><td>Date and time of event</td></tr>
+            <tr><td>expectedAttendees</td><td>Number</td><td>Planned number of attendees</td></tr>
+            <tr><td>location</td><td>Object</td><td>Name, address, city, geo coordinates</td></tr>
+            <tr><td>organizer</td><td>Object</td><td>Organizer ID (User), name, email, phone</td></tr>
+            <tr><td>sessions</td><td>Array of Session references</td><td>Linked sessions</td></tr>
+            <tr><td>guests</td><td>Array of Guest references</td><td>Guests invited, status, QR codes, check-in history</td></tr>
+            <tr><td>staff</td><td>Array of Staff references</td><td>Assigned staff with roles and task status</td></tr>
+            <tr><td>venue</td><td>Object</td><td>Venue ID, name, address, city, image</td></tr>
+            <tr><td>map</td><td>Object</td><td>Map URL and annotations (label, coordinates, type)</td></tr>
+            <tr><td>createdAt / updatedAt</td><td>Date</td><td>Record timestamps</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Session Schema -->
+      <section id="session">
+        <h2>Session</h2>
+        <p>Represents an individual session within an event.</p>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>title</td><td>String</td><td>Session title</td></tr>
+            <tr><td>speaker</td><td>String</td><td>Speaker name</td></tr>
+            <tr><td>startTime / endTime</td><td>Date</td><td>Session timing</td></tr>
+            <tr><td>description</td><td>String</td><td>Session description</td></tr>
+            <tr><td>location</td><td>String</td><td>Location within venue</td></tr>
+            <tr><td>eventId</td><td>ObjectId (ref Event)</td><td>Event reference</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ChatRoom Schema -->
+      <section id="chatroom">
+        <h2>ChatRoom</h2>
+        <p>Represents chat between a manager and staff.</p>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>managerId</td><td>ObjectId (ref User)</td><td>Manager who owns the room</td></tr>
+            <tr><td>members</td><td>Array of objects</td><td>Staff members with role and join timestamp</td></tr>
+            <tr><td>messages</td><td>Array of objects</td><td>Message history (senderId, role, type, content, timestamp)</td></tr>
+            <tr><td>createdAt</td><td>Date</td><td>Room creation timestamp</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Venue Schema -->
+      <section id="venue">
+        <h2>Venue</h2>
+        <p>Represents event venues.</p>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>name</td><td>String</td><td>Venue name</td></tr>
+            <tr><td>address</td><td>String</td><td>Physical address</td></tr>
+            <tr><td>capacity</td><td>Number</td><td>Max guests</td></tr>
+            <tr><td>facilities</td><td>Array[String]</td><td>List of facilities</td></tr>
+            <tr><td>city</td><td>String</td><td>City location</td></tr>
+            <tr><td>rating</td><td>Number</td><td>Venue rating</td></tr>
+            <tr><td>typeofvenue</td><td>String</td><td>Venue type</td></tr>
+            <tr><td>image</td><td>Object</td><td>URL and public_id</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <!-- Database & Deployment Section -->
+    <section id="deployment" class="card">
+      <h1>Deployment & Choice Justification</h1>
+      <p>Our website is deployed on <strong>Render</strong> and uses <strong>MongoDB</strong> with Mongoose.</p>
+
+      <h2>Full Database Schema</h2>
+      <p>Collections: User, Event, Session, ChatRoom, Venue. Details above in Data Models section.</p>
+
+      <h2>Deployment Information</h2>
+      <ul>
+        <li>Hosting: Render Web Service</li>
+        <li>Backend: Node.js + Express</li>
+        <li>Database: MongoDB Atlas</li>
+        <li>Automatic deployment from GitHub</li>
+        <li>SSL/HTTPS enabled</li>
+      </ul>
+
+      <h2>Choice Justification: MongoDB & Mongoose</h2>
+      <ul>
+        <li>Flexible schema for nested and dynamic data.</li>
+        <li>Scales horizontally for large guest lists and multiple events.</li>
+        <li>JSON-friendly for Node.js development.</li>
+        <li>Rapid development without table migrations.</li>
+        <li>Efficient for real-time operations (check-ins, chat, annotations).</li>
+        <li>Mongoose provides schema validation, references, and middleware.</li>
+        <li>Compared to SQL: no rigid tables, hierarchical data handled naturally, simpler joins, better write performance.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // Smooth scrolling & active link highlight
+    const links = document.querySelectorAll('.sidebar nav ul li a');
+    const sections = document.querySelectorAll('main section');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (pageYOffset >= sectionTop) current = section.getAttribute('id');
+      });
+      links.forEach(link => link.classList.remove('active'));
+      document.querySelector('.sidebar nav ul li a[href="#' + current + '"]')?.classList.add('active');
+    });
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        window.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

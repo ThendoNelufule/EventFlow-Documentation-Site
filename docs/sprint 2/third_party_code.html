@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Third-Party Code Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #153291;
+            color: white;
+            padding: 25px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #ff8800fb;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            text-align: left;
+            margin: 10px 0 0 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<header>Third-Party Code Documentation</header>
+
+<main>
+    <div class="section">
+        <h2>Overview</h2>
+        <p>This document lists all significant third-party tools and libraries used in the project and provides a justification for their inclusion. Proper documentation ensures maintainability, clarity, and transparency regarding external dependencies.</p>
+    </div>
+
+    <div class="section">
+        <h2>Third-Party Libraries & Justifications</h2>
+        <ul>
+            <li><strong>Cloudinary:</strong> Handles secure image uploads and cloud storage. Simplifies file management and delivery, reducing server load and improving performance.</li>
+            <li><strong>Socket.IO:</strong> Enables real-time bidirectional communication between clients and server. Supports live updates such as notifications, chat messages, and dynamic schedule changes, enhancing user experience.</li>
+            <li><strong>Jest:</strong> Provides automated unit and integration testing for backend routes and functions. Ensures consistent behavior, helps catch bugs early, and supports test-driven development practices.</li>
+            <li><strong>Playwright:</strong> Used for end-to-end UI testing. Simulates real user interactions to verify workflows across the application, ensuring a reliable front-end experience.</li>
+            <li><strong>Mongoose:</strong> Acts as an Object Data Modeling (ODM) library for MongoDB. Provides schema-based validation and convenient database queries, reducing complexity in data handling.</li>
+            <li><strong>jsonwebtoken:</strong> Handles secure token creation and verification for user authentication. Ensures protected route access and secure session management.</li>
+            <li><strong>qrcode:</strong> Generates and reads QR codes for ticketing and check-in functionality. Enables quick and reliable scanning of user or event information.</li>
+            <li><strong>nodemailer:</strong> Sends email notifications, confirmations, and alerts directly from the backend. Ensures timely communication with users regarding event updates and actions.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Justification Summary</h2>
+        <p>Each third-party library was carefully chosen to address specific needs in the project, including:</p>
+        <ul>
+            <li>Reducing development complexity and avoiding reinventing the wheel.</li>
+            <li>Ensuring robust testing and verification of backend and frontend functionality.</li>
+            <li>Enhancing user experience with real-time updates, QR code support, and secure media handling.</li>
+            <li>Providing reliable communication via email notifications.</li>
+            <li>Maintaining code clarity, maintainability, and scalability for future development.</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>
