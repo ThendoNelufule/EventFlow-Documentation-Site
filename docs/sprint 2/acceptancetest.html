@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceptance Tests - Evenflow</title>
+  <link rel="stylesheet" href="../css/Acceptance.css">
+</head>
+<body>
+  <main class="container">
+    <h1>EvenFlow Acceptance Tests</h1>
+    <p class="intro">The following acceptance tests verify that each user story works as intended.</p>
+
+    <section class="card manager">
+      <h2>Manager Acceptance Tests</h2>
+      <ul>
+        <li><strong>Login:</strong> Given a manager is registered, when they log in with correct credentials, then they should access the dashboard.</li>
+        <li><strong>Logout:</strong> Given a manager is logged in, when they log out, then they should return to the login page.</li>
+        <li><strong>Event Setup:</strong> Given a manager is logged in, when they create an event with valid details, then the event should be saved and visible.</li>
+        <li><strong>Staff Management:</strong> Given an event exists, when the manager adds staff, then staff should appear in the event staff list.</li>
+        <li><strong>Chat:</strong> Given a manager and staff are online, when the manager sends a message, then the staff should see it instantly.</li>
+        <li><strong>Venues:</strong> Given the manager opens venue list, when they select or add a venue, then it should be linked to the event.</li>
+        <li><strong>Guests:</strong> Given the manager invites guests, when emails are sent, then each guest should receive an invitation with a QR code.</li>
+        <li><strong>Program Export:</strong> Given a program exists, when the manager exports it, then a downloadable PDF should be generated.</li>
+      </ul>
+    </section>
+
+    <section class="card staff">
+      <h2>Staff Acceptance Tests</h2>
+      <ul>
+        <li><strong>Login:</strong> Given staff is registered, when they log in, then they should see assigned events.</li>
+        <li><strong>Logout:</strong> Given staff is logged in, when they log out, then they should be redirected to login.</li>
+        <li><strong>Chat:</strong> Given staff is online, when they receive a message, then it should appear instantly in their chat window.</li>
+      </ul>
+    </section>
+
+    <section class="card guest">
+      <h2>Guest Acceptance Tests</h2>
+      <ul>
+        <li><strong>Invitation:</strong> Given a guest is invited, when the manager sends the invite, then the guest should receive an email with a unique QR code.</li>
+        <li><strong>Check-in:</strong> Given a guest arrives at the event, when they present their QR code, then it should validate successfully.</li>
+      </ul>
+    </section>
+
+    <section class="card security">
+      <h2>Security Acceptance Tests</h2>
+      <ul>
+        <li><strong>Valid QR Code:</strong> Given a guest presents a valid code, when security scans it, then the system should display success.</li>
+        <li><strong>Invalid QR Code:</strong> Given a guest presents an invalid code, when security scans it, then the system should display a warning.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
