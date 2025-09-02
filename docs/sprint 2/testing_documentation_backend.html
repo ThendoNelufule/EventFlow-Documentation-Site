@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Backend Testing Documentation - App Routes - Sprint 2</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #153291;
+            color: white;
+            padding: 30px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #ff8800fb;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        ul {
+            text-align: left;
+            margin: 10px 0 0 20px;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>Backend Testing Documentation - App Routes - Sprint 2</header>
+
+<main>
+    <div class="section">
+        <h2>Overview</h2>
+        <p>For Sprint 2, we implemented <strong>Jest automated tests</strong> for the backend app routes of the Event Flow system, defined in <code>app.test.js</code>. These tests target the core application routes in <code>index.js</code>, focusing on user authentication, role management, and navigation. Currently, 40 out of 58 tests across the project are passing, indicating ongoing development and refinement of the test suite and backend implementation.</p>
+    </div>
+
+    <div class="section">
+        <h2>Test Coverage</h2>
+        <p>The following app-related routes and functionalities were tested in <code>app.test.js</code>, covering the routes defined in <code>index.js</code>:</p>
+        <ul>
+            <li><strong>Welcome Route:</strong> Tested the <code>/welcome</code> route to ensure it renders the welcome page with a 200 status.</li>
+            <li><strong>Signup Route:</strong> Verified the <code>/signup</code> route renders the signup page with a 200 status.</li>
+            <li><strong>Submit Role Route:</strong> Tested the <code>/submit-role</code> POST route to confirm it updates the user’s role and redirects to <code>/manager/home</code> with a 302 status.</li>
+            <li><strong>Dashboard Route:</strong> Ensured the <code>/dashboard</code> route renders the user dashboard with a 200 status.</li>
+            <li><strong>Logout Route:</strong> Validated the <code>/logout</code> route redirects to <code>/login</code> with a 302 status.</li>
+            <li><strong>Roles Route:</strong> Tested the <code>/roles</code> route to ensure it renders the role selection page with a 200 status.</li>
+            <li><strong>Report Incident Route:</strong> Verified the <code>/report-incident</code> route renders the incident reporting page with a 200 status.</li>
+            <li><strong>My Tasks Route:</strong> Ensured the <code>/my-tasks</code> route renders the task management page with a 200 status.</li>
+            <li><strong>Announcements Route:</strong> Tested the <code>/announcements</code> route to confirm it renders the announcements page with a 200 status.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Authentication & Mocking</h2>
+        <p>Most routes require authentication, so we mocked the <code>authenticateJWT</code> and <code>onboardingJWT</code> middleware to simulate a logged-in user with <code>req.user = { id: '123' }</code>. The <code>jsonwebtoken</code> library’s <code>sign</code> method was mocked to return a dummy token:</p>
+        <pre><code>
+jest.spyOn(jwt, 'sign').mockImplementation(() => 'dummy-token');
+        </code></pre>
+        <p>Mongoose models (<code>User</code> and <code>chat</code>) were mocked to isolate database dependencies:</p>
+        <pre><code>
+jest.mock('../models/User', () => ({
+  findById: jest.fn().mockResolvedValue({ id: '123', name: 'Test User' }),
+  findByIdAndUpdate: jest.fn().mockResolvedValue({}),
+  find: jest.fn().mockResolvedValue([{ id: '123', name: 'Sender' }])
+}));
+
+jest.mock('../models/chat', () => ({
+  findOne: jest.fn().mockResolvedValue({ messages: [], members: [{ userId: '123' }] }),
+  create: jest.fn().mockResolvedValue({})
+}));
+        </code></pre>
+        <p>The <code>res.render</code> method was mocked to return a simple string (<code>Rendered [view]</code>) to test view rendering without requiring actual EJS template files.</p>
+    </div>
+
+    <div class="section">
+        <h2>Running the Tests</h2>
+        <p>To run the backend tests for app routes, use the following command:</p>
+        <pre><code>npx jest backend/tests/app.test.js</code></pre>
+        <p>This command executes the test suite for the app routes defined in <code>index.js</code>. Ensure the following dependencies are installed:</p>
+        <pre><code>npm install --save-dev jest supertest express express-session</code></pre>
+        <pre><code>npm install express body-parser</code></pre>
+        <p>Note that the project currently has 40 out of 58 tests passing across all test suites, showing areas for further improvement in backend implementation or test configuration.</p>
+    </div>
+
+    <div class="section">
+        <h2>Continuous Integration (GitHub Actions)</h2>
+        <p>The project includes a <code>Run Jest Tests</code> workflow file in GitHub Actions. This workflow is triggered on pushes and pull requests to the <code>main</code> branch, ensuring backend tests are automatically executed whenever new code is added or reviewed.</p>
+        <p>The workflow sets up Node.js, installs dependencies, and runs Jest with coverage reporting. It also includes <code>continue-on-error: true</code> for the test step, allowing the workflow to complete even if some tests fail (useful during active development when parts of the suite are still being refined).</p>
+        <pre><code>
+name: Run Jest Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - name: Run Jest tests
+        run: npm test -- --coverage
+        continue-on-error: true
+        </code></pre>
+        <p>This workflow ensures consistent test execution across environments, provides coverage data, and helps maintain quality throughout the development process.</p>
+    </div>
+
+    <div class="section">
+        <h2>Known Issues & Resolutions</h2>
+        <p>Several issues were identified during testing, with ongoing efforts to resolve them:</p>
+        <ul>
+            <li><strong>Authentication Middleware Mocking:</strong> The <code>authenticateJWT</code> and <code>onboardingJWT</code> middleware were mocked to bypass actual JWT verification, ensuring tests focus on route logic. Adjustments may be needed if the middleware behavior changes.</li>
+            <li><strong>View Rendering:</strong> The <code>res.render</code> method was mocked to avoid requiring actual EJS templates. If templates are integrated, the test suite may need updates to validate rendered content.</li>
+            <li><strong>Partial Test Success:</strong> With 40 out of 58 tests passing, some failures (in suites like <code>manager.test.js</code>) indicate issues such as route mismatches, error handling inconsistencies, or missing validations. These are being addressed in parallel.</li>
+            <li><strong>Session Configuration:</strong> The test suite uses <code>express-session</code> with a test secret (<code>testsecret</code>). Ensure the application’s session configuration aligns with the test setup to avoid discrepancies.</li>
+            <li><strong>Route-Specific Testing:</strong> The <code>/submit-role</code> route assumes a redirect to <code>/manager/home</code> for the manager role. If other roles (e.g., staff, guest) redirect elsewhere, additional test cases may be needed.</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>
