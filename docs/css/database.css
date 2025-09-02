@@ -83,6 +83,11 @@ body {
   margin-bottom: 0.5rem;
 }
 
+img {
+  width: 40vh;
+  height: 60vh;
+}
+
 /* Tables */
 table {
   width: 100%;
