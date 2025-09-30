@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Partner API Documentation - Weather Integration</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:#f4f4f8; color:#333; }
+        header { background:#153291; color:white; padding:30px 0; font-size:2rem; text-align:center; font-weight:bold; }
+        main { max-width:900px; margin:40px auto; padding:0 20px; }
+        .section { background:white; border-radius:12px; padding:25px; margin-bottom:30px; box-shadow:0 4px 6px rgba(0,0,0,0.1); }
+        .section h2 { color:#ff8800fb; margin-bottom:15px; }
+        code { background:#f0f0f0; padding:2px 6px; border-radius:4px; font-family: monospace; }
+        pre { background:#f0f0f0; padding:15px; border-radius:8px; overflow-x:auto; }
+        ul { text-align:left; margin:10px 0 0 20px; }
+    </style>
+</head>
+<body>
+
+<header>Partner API Documentation - Weather Integration</header>
+
+<main>
+    <div class="section">
+        <h2>Overview</h2>
+        <p>This documentation covers the Partner API provided by <strong>INSERT GROUP NAME</strong>. The API allows external groups to access Event Flow data for events, staff, and guests. Additionally, for guests, weather predictions are included on invitation emails and the guest dashboard to enhance the user experience.</p>
+        <p>Authentication is handled via API Key, which must be included in all requests to access these endpoints.</p>
+    </div>
+
+    <div class="section">
+        <h2>Authentication</h2>
+        <p>All endpoints require a valid API Key to be passed in the headers:</p>
+        <pre><code>Authorization: Bearer &lt;YOUR_API_KEY&gt;</code></pre>
+        <p>Requests without a valid API key will return a <code>401 Unauthorized</code> response.</p>
+    </div>
+
+    <div class="section">
+        <h2>Partner API Endpoints</h2>
+
+        <h3>GET /api/events</h3>
+        <p>Retrieve all events currently in the system.</p>
+        <pre><code>curl -H "Authorization: Bearer &lt;YOUR_API_KEY&gt;" https://yourdomain.com/api/events</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>[
+  {
+    "id": "eventId123",
+    "name": "Tech Conference 2025",
+    "description": "Annual tech event",
+    "dateTime": "2025-06-20T09:00:00Z",
+    "location": {
+      "name": "Convention Center",
+      "city": "CityName"
+    }
+  },
+  ...
+]</code></pre>
+
+        <h3>GET /api/staff</h3>
+        <p>Retrieve all staff users across events.</p>
+        <pre><code>curl -H "Authorization: Bearer &lt;YOUR_API_KEY&gt;" https://yourdomain.com/api/staff</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>[
+  {
+    "id": "staffId123",
+    "fullName": "Jane Doe",
+    "role": "staff",
+    "eventId": "eventId123"
+  },
+  ...
+]</code></pre>
+
+        <h3>GET /api/guests</h3>
+        <p>Retrieve all registered guests. Each guest object includes the weather prediction for their event date.</p>
+        <pre><code>curl -H "Authorization: Bearer &lt;YOUR_API_KEY&gt;" https://yourdomain.com/api/guests</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>[
+  {
+    "id": "guestId123",
+    "fullName": "John Smith",
+    "email": "john@example.com",
+    "eventId": "eventId123",
+    "checkedIn": false,
+    "weatherPrediction": {
+      "summary": "Sunny",
+      "temperatureC": 25,
+      "chanceOfRain": "10%"
+    }
+  },
+  ...
+]</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Notes</h2>
+        <ul>
+            <li>Weather predictions are provided in the guest object and included in invitation emails.</li>
+            <li>Endpoints are read-only for external partners; no write operations are currently exposed.</li>
+            <li>Ensure your API Key is kept confidential to prevent unauthorized access.</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>
