@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Partner API Documentation - Weather Integration</title>
+    <title>Partner API Documentation</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:#f4f4f8; color:#333; }
         header { background:#153291; color:white; padding:30px 0; font-size:2rem; text-align:center; font-weight:bold; }
@@ -16,13 +16,14 @@
 </head>
 <body>
 
-<header>Partner API Documentation - Weather Integration</header>
+<header>Partner API Documentation</header>
 
 <main>
     <div class="section">
         <h2>Overview</h2>
-        <p>This documentation covers the Partner API provided by <strong>INSERT GROUP NAME</strong>. The API allows external groups to access Event Flow data for events, staff, and guests. Additionally, for guests, weather predictions are included on invitation emails and the guest dashboard to enhance the user experience.</p>
+        <p>Our APIs allow external groups to access Event Flow data for events, staff, and guests.</p>
         <p>Authentication is handled via API Key, which must be included in all requests to access these endpoints.</p>
+        <p>We collaborated with three partner groups to test integrations. While their APIs were not functional during testing, all three groups successfully integrated with our API.</p>
     </div>
 
     <div class="section">
@@ -68,7 +69,7 @@
 ]</code></pre>
 
         <h3>GET /api/guests</h3>
-        <p>Retrieve all registered guests. Each guest object includes the weather prediction for their event date.</p>
+        <p>Retrieve all registered guests.</p>
         <pre><code>curl -H "Authorization: Bearer &lt;YOUR_API_KEY&gt;" https://yourdomain.com/api/guests</code></pre>
         <p><strong>Response:</strong></p>
         <pre><code>[
@@ -77,12 +78,7 @@
     "fullName": "John Smith",
     "email": "john@example.com",
     "eventId": "eventId123",
-    "checkedIn": false,
-    "weatherPrediction": {
-      "summary": "Sunny",
-      "temperatureC": 25,
-      "chanceOfRain": "10%"
-    }
+    "checkedIn": false
   },
   ...
 ]</code></pre>
@@ -91,9 +87,9 @@
     <div class="section">
         <h2>Notes</h2>
         <ul>
-            <li>Weather predictions are provided in the guest object and included in invitation emails.</li>
             <li>Endpoints are read-only for external partners; no write operations are currently exposed.</li>
             <li>Ensure your API Key is kept confidential to prevent unauthorized access.</li>
+            <li>During testing with three groups namely <strong>CODEXA, PIXEL PERFECT, and MIGHTY MORPHIN</strong>, their APIs were unavailable, but all successfully consumed data from our API.</li>
         </ul>
     </div>
 </main>
