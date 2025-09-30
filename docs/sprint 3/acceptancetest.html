@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceptance Tests - Evenflow (Sprint 3)</title>
+  <link rel="stylesheet" href="../css/Acceptance.css">
+</head>
+<body>
+  <main class="container">
+    <h1>EvenFlow Acceptance Tests - Sprint 3</h1>
+    <p class="intro">The following acceptance tests verify that each new user story introduced in Sprint 3 works as intended.</p>
+
+    <section class="card manager">
+      <h2>Manager Acceptance Tests</h2>
+      <ul>
+        <li><strong>Task Assignment:</strong> Given a manager is logged in, when they assign a task to a staff member, then the task should appear in that staff member’s task list.</li>
+        <li><strong>Map Upload:</strong> Given a manager has selected a venue, when they upload a map, then the map should be stored and linked to the venue.</li>
+        <li><strong>Map Annotation:</strong> Given a map is uploaded, when the manager adds annotations, then staff should see the updated annotated map.</li>
+        <li><strong>Announcements:</strong> Given staff are online, when the manager posts an announcement, then all staff should instantly receive the announcement in real time.</li>
+      </ul>
+    </section>
+
+    <section class="card staff">
+      <h2>Staff Acceptance Tests</h2>
+      <ul>
+        <li><strong>Task Completion:</strong> Given a staff member has assigned tasks, when they complete a task and mark it done, then the system should update the task status and notify the manager.</li>
+        <li><strong>Incident Reporting:</strong> Given staff are logged in, when a staff member reports an incident, then the incident should be visible to all staff and the manager. Other staff should also be able to mark attendance or follow-up on the incident.</li>
+        <li><strong>Notifications:</strong> Given a manager sends a notification, when staff are logged in, then the notification should appear instantly in the staff interface.</li>
+        <li><strong>Map Viewing:</strong> Given the manager uploads and annotates a map, when a staff member opens the map, then they should see the venue map along with all manager annotations.</li>
+      </ul>
+    </section>
+
+    <section class="card guest">
+      <h2>Guest Acceptance Tests</h2>
+      <ul>
+        <li><strong>Map Access:</strong> Given the manager uploads and annotates a map, when a guest opens the event map, then they should be able to view the venue map along with all manager annotations.</li>
+        <li><strong>Event Details:</strong> Given a guest is invited to an event, when they access the event page, then they should be able to see the event details such as schedule, location, and description.</li>
+        <li><strong>Incident Reporting:</strong> Given a guest attends an event, when they report an incident, then the system should record it and make it visible to staff and the manager for follow-up.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
