@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Feedback - Sprint 3</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #153291;
+            color: white;
+            padding: 30px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #ff8800fb;
+            margin-bottom: 15px;
+        }
+
+        .section p, .section ul {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #153291;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .evidence {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .evidence img, .evidence video {
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        video {
+            display: block;
+        }
+
+        .resolved-note {
+            font-style: italic;
+            color: #2d6a4f;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>User Feedback - Sprint 3</header>
+
+<main>
+    <div class="section">
+        <h2>Overview</h2>
+        <p>We conducted user testing for Sprint 3 on <strong>Sunday, 28 September 2025</strong>. The purpose of this session was to evaluate usability of the Staff Portal, gather participant feedback, and identify areas for improvement. Below is the participant, contact details, the issue found, and the feedback provided.</p>
+    </div>
+
+    <!-- Participant 1 -->
+    <div class="section">
+        <h2>Feedback Participant: Musala Ndouvhada</h2>
+        <p><strong>Contact:</strong> 083 667 9065</p>
+        <p><strong>Scenario:</strong> Musala went through the full process of testing the <strong>Staff Portal</strong>, focusing on forms, navigation, and page responsiveness. While testing the staff form, he discovered a typographical error where the label for the location field was written as <code>"locatieon"</code> instead of <code>"location"</code>.</p>
+
+        <p><strong>Feedback (verbatim):</strong></p>
+        <div class="evidence" style="flex-direction:column;align-items:flex-start;">
+            <p style="margin:0 0 10px 0; font-style:italic; background:#fafafa; padding:10px; border-left:4px solid #6a1b9a; border-radius:6px;">
+                "Your platform is nice, but you are loading the CSS many times which causes it to take too much time. You should use partials for faster performance. Also — if you add a little spice (like subtle micro-interactions, smoother transitions, and cleaner spacing) the UI will feel much more polished and enjoyable to use."
+            </p>
+        </div>
+
+        <p><strong>Evidence of Issue:</strong></p>
+        <div class="evidence">
+            <img src="../images/A.jpg" alt="Typo Evidence Screenshot">
+        </div>
+        <p class="resolved-note">Issue later resolved; the typo was corrected to <code>"location"</code>.</p>
+
+        <p><strong>Team Action / Improvement:</strong></p>
+        <ul>
+            <li>Fixed the typo in the staff portal form (changed <code>"locatieon"</code> to <code>"location"</code>).</li>
+            <li>Refactored CSS loading to use partials/includes so stylesheets are not duplicated across templates — this reduces redundant downloads and improves page-load performance.</li>
+            <li>Planned small UI enhancements ("spice") including micro-interactions, subtle transitions, and adjusted spacing to make the interface feel smoother and more professional in the next sprint.</li>
+        </ul>
+
+        <p><strong>Proof of Improvements:</strong></p>
+        <p>The improvements can be directly observed on the <strong>live platform</strong>. In addition, git commit logs serve as technical evidence showing both the typo fix and the CSS refactor (commit hashes can be provided if needed).</p>
+    </div>
+
+    <!-- Participant 2 -->
+    <div class="section">
+        <h2>Feedback Participant: Mulega Muano</h2>
+        <p><strong>Contact:</strong> 079 645 2796</p>
+        <p><strong>Scenario:</strong> Mulega tested the incident reporting system. When he clicked <strong>Submit Report</strong>, the platform returned a server error due to a misconfigured route. The issue was later fixed.</p>
+
+        <p><strong>Evidence of Issue:</strong></p>
+        <div class="evidence">
+            <video controls>
+                <source src="../images/1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p class="resolved-note">Issue later resolved; the route was corrected and reports now submit successfully.</p>
+
+        <p><strong>Team Action / Improvement:</strong></p>
+        <ul>
+            <li>Corrected the backend route to fix the server error on "Submit Report".</li>
+            <li>Added proper error handling to prevent similar issues in the future.</li>
+            <li>Improvements can be verified directly on the <strong>live platform</strong> and via git commit logs.</li>
+        </ul>
+    </div>
+
+    <!-- Participant 3 -->
+    <div class="section">
+        <h2>Feedback Participant: Eugene Mukwevho</h2>
+        <p><strong>Contact:</strong> 065 996 1575</p>
+        <p><strong>Scenario:</strong> Eugene tested the manager dashboard. When creating an announcement, the announcement was successfully created but could not be deleted due to a technical backend error. The issue was later identified and resolved.</p>
+
+        <p><strong>Evidence of Issue:</strong></p>
+        <div class="evidence">
+            <video controls>
+                <source src="../images/E.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p class="resolved-note">Issue later resolved; announcements can now be created and deleted successfully.</p>
+
+        <p><strong>Team Action / Improvement:</strong></p>
+        <ul>
+            <li>Investigated and resolved the backend error causing announcements not to delete.</li>
+            <li>Confirmed functionality on the live platform; users can now create and delete announcements without issue.</li>
+            <li>Improvements can be verified directly on the <strong>live platform</strong> and via git commit logs.</li>
+        </ul>
+    </div>
+
+    <!-- Common Feedback Section -->
+    <div class="section">
+        <h2>Common Feedback from Participants</h2>
+        <p>After analyzing the feedback from all participants, the most significant and recurring issue identified was related to <strong>performance</strong>. Multiple testers noted that page load times were slower than expected. Investigation revealed that the root cause was the platform loading the CSS multiple times across templates instead of using partials. This caused unnecessary duplicate downloads, affecting overall performance.</p>
+        <p><strong>Resolution:</strong> The CSS loading was refactored to use partials/includes, which eliminated redundancy and improved page-load speed. This improvement can be observed directly on the <strong>live platform</strong>. Additionally, the commit history on <strong>GitHub</strong> serves as proof of this technical fix.</p>
+        <p>The participants appreciated the responsiveness after this fix, and this was the main concern raised by most testers.</p>
+    </div>
+
+</main>
+
+</body>
+</html>
