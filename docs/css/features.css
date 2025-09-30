@@ -1,0 +1,72 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f6fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: #153291;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Main Content */
+main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Feature Sections */
+.feature {
+  background: #fff;
+  margin-bottom: 30px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.feature:hover {
+  transform: translateY(-3px);
+}
+
+.feature h2 {
+  color: #ff8800;
+  margin-bottom: 15px;
+}
+
+.feature ul {
+  padding-left: 20px;
+}
+
+.feature li {
+  margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background: #153291;
+  color: white;
+  padding: 15px;
+  font-size: 0.95rem;
+  margin-top: 40px;
+  border-top: 4px solid #ff8800;
+}
