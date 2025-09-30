@@ -21,7 +21,7 @@
 <main>
     <div class="section">
         <h2>Overview</h2>
-        <p>For Sprint 3, I set up and documented all the database schemas for the Event Flow system. I’m using <code>MongoDB</code> with <code>Mongoose</code> and have defined collections for users, events, sessions, guests, staff, tasks, chat, annotations, venues, incidents, and announcements. These schemas cover relationships, validation, and constraints needed for the backend to function correctly.</p>
+        <p>For Sprint 3, we set up and documented all the database schemas for the Event Flow system. We’re using <code>MongoDB</code> with <code>Mongoose</code> and have defined collections for users, events, sessions, guests, staff, tasks, chat, annotations, venues, incidents, and announcements. These schemas cover relationships, validation, and constraints needed for the backend to function correctly.</p>
     </div>
 
     <div class="section">
@@ -76,9 +76,9 @@
     <div class="section">
         <h2>Testing Notes</h2>
         <ul>
-            <li>I tested database operations using Jest with mocked Mongoose models.</li>
-            <li>db.test.js handles connection and query tests.</li>
-            <li>Controller tests like checkinController.test.js and guestsController.test.js also interact with the models.</li>
+            <li>We tested database operations using Jest with mocked Mongoose models.</li>
+            <li><code>db.test.js</code> handles connection and query tests.</li>
+            <li>Controller tests like <code>checkinController.test.js</code> and <code>guestsController.test.js</code> also interact with the models.</li>
             <li>Some schemas use string IDs for easier testing but may switch to ObjectId in production.</li>
         </ul>
     </div>
