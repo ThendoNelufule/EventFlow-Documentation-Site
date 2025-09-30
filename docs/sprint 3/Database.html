@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Documentation - Sprint 3</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:#f4f4f8; color:#333; }
+        header { background:#153291; color:white; padding:30px 0; font-size:2rem; text-align:center; font-weight:bold; }
+        main { max-width:900px; margin:40px auto; padding:0 20px; }
+        .section { background:white; border-radius:12px; padding:25px; margin-bottom:30px; box-shadow:0 4px 6px rgba(0,0,0,0.1); }
+        .section h2 { color:#ff8800fb; margin-bottom:15px; }
+        pre { background:#f0f0f0; padding:15px; border-radius:8px; overflow-x:auto; }
+        code { background:#f0f0f0; padding:2px 6px; border-radius:4px; font-family: monospace; }
+        ul { text-align:left; margin:10px 0 0 20px; }
+    </style>
+</head>
+<body>
+
+<header>Database Documentation - Sprint 3</header>
+
+<main>
+    <div class="section">
+        <h2>Overview</h2>
+        <p>For Sprint 3, I set up and documented all the database schemas for the Event Flow system. I’m using <code>MongoDB</code> with <code>Mongoose</code> and have defined collections for users, events, sessions, guests, staff, tasks, chat, annotations, venues, incidents, and announcements. These schemas cover relationships, validation, and constraints needed for the backend to function correctly.</p>
+    </div>
+
+    <div class="section">
+        <h2>Models</h2>
+        <ul>
+            <li><code>User</code> – Stores Google ID, email, display name, role, and creation timestamp.</li>
+            <li><code>Event</code> – All event info, including sessions, guests, staff, venue, maps, and annotations.</li>
+            <li><code>Guest</code> – Tracks guest info, QR codes, reference numbers, check-in status, and event association.</li>
+            <li><code>Session</code> – Event session details like title, speaker, time, description, location, and event ID.</li>
+            <li><code>Task</code> – Staff tasks, including title, category, description, priority, status, estimated hours, and due date.</li>
+            <li><code>Chat</code> – Manager-staff chat rooms with members, messages, roles, message types, and timestamps.</li>
+            <li><code>Annotation</code> – Map markers or circles with coordinates, radius, user ID, and timestamp.</li>
+            <li><code>Announcement</code> – Event announcements with title, message, audience, priority, status, and read tracking.</li>
+            <li><code>Incident</code> – Records of incidents with title, priority, category, location, description, staff/guest refs, and event ID.</li>
+            <li><code>Venue</code> – Venue details including name, address, capacity, city, facilities, rating, type, images, and maps.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Relationships</h2>
+        <ul>
+            <li>Events reference sessions, guests, staff, and venues.</li>
+            <li>Tasks belong to events and are assigned to staff.</li>
+            <li>Chats are linked to a manager and include staff members.</li>
+            <li>Announcements track which users have read them.</li>
+            <li>Incidents link to events and optionally to staff or guests.</li>
+            <li>Annotations belong to a user and are part of event maps.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Indexes & Constraints</h2>
+        <ul>
+            <li>User.email and User.googleId are unique.</li>
+            <li>Guest.email is unique.</li>
+            <li>Chat.managerId is unique.</li>
+            <li>Enum fields enforce valid values (roles, priority, audience, status).</li>
+            <li>Timestamps (<code>createdAt</code>, <code>updatedAt</code>) are auto-managed by Mongoose.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Usage Notes</h2>
+        <ul>
+            <li>All models are exported via <code>module.exports</code> and used in controllers or services.</li>
+            <li>Mongoose references (<code>ref</code>) link collections and allow population of related data.</li>
+            <li>Defaults are set for fields like status, priority, and createdAt.</li>
+            <li>Validation rules are enforced via <code>required</code>, <code>enum</code>, and <code>unique</code>.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Testing Notes</h2>
+        <ul>
+            <li>I tested database operations using Jest with mocked Mongoose models.</li>
+            <li>db.test.js handles connection and query tests.</li>
+            <li>Controller tests like checkinController.test.js and guestsController.test.js also interact with the models.</li>
+            <li>Some schemas use string IDs for easier testing but may switch to ObjectId in production.</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>

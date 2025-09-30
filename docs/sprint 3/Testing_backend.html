@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Backend Testing Documentation - Sprint 3</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:#f4f4f8; color:#333; }
+        header { background:#153291; color:white; padding:30px 0; font-size:2rem; text-align:center; font-weight:bold; }
+        main { max-width:900px; margin:40px auto; padding:0 20px; }
+        .section { background:white; border-radius:12px; padding:25px; margin-bottom:30px; box-shadow:0 4px 6px rgba(0,0,0,0.1); }
+        .section h2 { color:#ff8800fb; margin-bottom:15px; }
+        pre { background:#f0f0f0; padding:15px; border-radius:8px; overflow-x:auto; }
+        code { background:#f0f0f0; padding:2px 6px; border-radius:4px; font-family: monospace; }
+        ul { text-align:left; margin:10px 0 0 20px; }
+    </style>
+</head>
+<body>
+
+<header>Backend Testing Documentation - Sprint 3</header>
+
+<main>
+    <div class="section">
+        <h2>Overview</h2>
+        <p>This document covers the Jest automated tests for the backend of the Event Flow system, including controllers, services, authentication, and database logic. Tests are isolated using mocked models and middleware. Most test files focus on HTTP responses, role management, task/event operations, and error handling.</p>
+        <p>Currently, many tests pass, while some are still being refined as the backend evolves. The testing suite ensures that the core logic works as expected before integration with frontend routes.</p>
+    </div>
+
+    <div class="section">
+        <h2>Test Coverage</h2>
+        <p>The following test files and their primary focus are covered:</p>
+        <ul>
+            <li><code>apiKeyAuth.test.js</code> – API key authentication logic and validation.</li>
+            <li><code>app.test.js</code> – Main app routes, including login, signup, dashboard, logout, role assignment, tasks, and announcements.</li>
+            <li><code>checkinController.test.js</code> – Check-in endpoints and error handling.</li>
+            <li><code>db.test.js</code> – Database connection, query handling, and error scenarios.</li>
+            <li><code>guestsController.test.js</code> – Guest registration, invites, and verification.</li>
+            <li><code>manager.test.js</code> – Manager role routes, access control, and dashboard rendering.</li>
+            <li><code>managerController.test.js</code> – Manager tasks, incidents, chat, and error handling.</li>
+            <li><code>mapController.test.js</code> – Map-related endpoints and error handling.</li>
+            <li><code>passport.test.js</code> – Passport configuration and export verification.</li>
+            <li><code>qrService.test.js</code> – QR code generation and validation logic.</li>
+            <li><code>refNumberService.test.js</code> – Reference number generation.</li>
+            <li><code>scheduleController.test.js</code> – Schedule endpoints and error handling.</li>
+            <li><code>session.test.js</code> – Session creation, updates, and verification.</li>
+            <li><code>setup.js</code> – Test environment setup.</li>
+            <li><code>staffController.test.js</code> – Staff-related endpoints, role operations.</li>
+            <li><code>swagger.test.js</code> – Swagger documentation endpoint validation.</li>
+            <li><code>verifyGuest.test.js</code> – Guest verification service logic.</li>
+            <li><code>announcementController.test.js</code> – Announcement endpoints, CRUD operations, and error handling.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Mocking & Authentication</h2>
+        <p>To isolate tests, models and middleware were mocked:</p>
+        <pre><code>
+jest.mock('../models/User');
+jest.mock('../models/Event');
+jest.mock('../models/Session');
+jest.mock('../models/Venue');
+jest.mock('../models/chat');
+jest.mock('../models/Annotation');
+jest.mock('../models/Incidents');
+jest.mock('../models/Task');
+        </code></pre>
+        <p>Middleware like <code>authenticateJWT</code> and <code>onboardingJWT</code> is mocked to simulate authenticated users:</p>
+        <pre><code>
+req.user = { id: '123' }; 
+jest.spyOn(jwt, 'sign').mockImplementation(() => 'dummy-token');
+        </code></pre>
+        <p><code>res.render</code> and <code>res.json</code> are mocked to test output without rendering actual EJS templates or performing database writes.</p>
+    </div>
+
+    <div class="section">
+        <h2>Running Tests</h2>
+        <p>Run all backend tests using:</p>
+        <pre><code>npx jest backend/tests</code></pre>
+        <p>Ensure dev dependencies are installed:</p>
+        <pre><code>npm install --save-dev jest supertest express express-session</code></pre>
+        <pre><code>npm install express body-parser</code></pre>
+        <p>Tests can also be run selectively on a single file:</p>
+        <pre><code>npx jest backend/tests/managerController.test.js</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Continuous Integration</h2>
+        <p>The GitHub Actions workflow runs Jest tests on pushes and pull requests to <code>main</code>. It sets up Node.js, installs dependencies, and runs tests with coverage reporting. Partial test failures do not stop the workflow to allow ongoing development.</p>
+        <pre><code>
+name: Run Jest Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - name: Run Jest tests
+        run: npm test -- --coverage
+        continue-on-error: true
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Known Issues & Notes</h2>
+        <ul>
+            <li>Some tests rely on mocked database models; integration tests may fail if models change.</li>
+            <li>Middleware mocking may need updates if authentication logic changes.</li>
+            <li>Partial test success across all files indicates ongoing development and refinement.</li>
+            <li>Routes with redirects (like role submission) assume specific user roles; additional test cases may be needed for other roles.</li>
+        </ul>
+    </div>
+    <div class="section">
+    <h2>Results & Coverage</h2>
+    <p>After running all backend tests for Sprint 3, here are the results:</p>
+    <ul>
+        <li><strong>Total Test Suites:</strong> 23</li>
+        <li><strong>Passed:</strong> 10</li>
+        <li><strong>Failed:</strong> 13</li>
+        <li><strong>Total Tests:</strong> 106</li>
+        <li><strong>Passed:</strong> 88</li>
+        <li><strong>Failed:</strong> 18</li>
+        <li><strong>Execution Time:</strong> 30s</li>
+    </ul>
+    <p>This shows that while most core functionalities are working, there are still failing tests that need to be addressed. Failures are primarily in:</p>
+    <ul>
+        <li>Manager and staff controller routes</li>
+        <li>Error handling and edge cases in task/event operations</li>
+        <li>Some database integration tests</li>
+        <li>Authentication and role-based redirects</li>
+    </ul>
+</div>
+
+</main>
+
+</body>
+</html>
